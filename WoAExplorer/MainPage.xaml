@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="WoAExplorer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WoAExplorer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:customcontrols="using:WoAExplorer.CustomControls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}">
+
+    <Grid>
+        <TextBlock x:Name="currentFolderPathTextBlock" HorizontalAlignment="Left" Margin="50,16,0,0" Text="[currentPath]" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button x:Name="folderUpButton" Content="↑" FontFamily="Segoe UI Symbol" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{StaticResource ButtonRevealStyle}" Click="FolderUpButton_Click"/>
+        <ScrollViewer HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="300" Margin="0, 50, 0, 0">
+            <ListView x:Name="shortcutsListPanel" ItemsSource="{x:Bind availableDrives}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <customcontrols:StorageItemControl Item="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+        <controls:DropShadowPanel HorizontalAlignment="Stretch" Margin="300,50,0,0" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <ScrollViewer x:Name="contentScrollViewer" >
+                <Grid x:Name="contentGrid" Background="{ThemeResource SystemChromeLowColor}" Opacity="1">
+                    <ListView x:Name="contentListPanel" ItemsSource="{x:Bind currentItems}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <customcontrols:StorageItemControl Item="{Binding}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </ScrollViewer>
+        </controls:DropShadowPanel>
+    </Grid>
+</Page>

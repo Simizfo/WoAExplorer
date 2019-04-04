@@ -1,0 +1,80 @@
+﻿<UserControl
+    x:Class="WoAExplorer.CustomControls.StorageItemControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WoAExplorer.CustomControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    mc:Ignorable="d"
+    d:DesignHeight="50"
+    d:DesignWidth="400">
+
+    <Grid x:Name="mainGrid" Tapped="MainGrid_Tapped" Height="50" HorizontalAlignment="Stretch">
+        <Image x:Name="ItemIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10, 0, 0, 0" Width="40" Height="40"/>
+        <TextBlock x:Name="ItemNameLabel" Text="AAA" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60, 0, 0, 0"/>
+        <Grid.ContextFlyout>
+            <Flyout>
+                <StackPanel Margin="0" Padding="-12" Spacing="0">
+                    <controls:DropShadowPanel HorizontalAlignment="Stretch" Height="100" MinWidth="250" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <Grid Height="100" MinWidth="250" Background="{ThemeResource SystemChromeMediumColor}">
+                            <Image x:Name="ItemFlyoutIcon" Margin="15, 15, 0, 15" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Left"></Image>
+                            <TextBlock x:Name="ItemFlyoutName" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100, 20, 0, 0" FontSize="12" Text="[itemname]"></TextBlock>
+                            <TextBlock x:Name="ItemFlyoutType" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100, 35, 0, 0" FontSize="12" Text="[itemtype]"></TextBlock>
+                            <TextBlock x:Name="ItemFlyoutSize" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100, 50, 0, 0" FontSize="12" Text="[itemsize]"></TextBlock>
+                        </Grid>
+                    </controls:DropShadowPanel>
+
+                    <MenuFlyoutItem Text="Copy" >
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE8C8;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Cut" >
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE8C6;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Paste" >
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE77F;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Text="Rename" >
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem Text="Select" >
+                    </MenuFlyoutItem>
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Text="Delete" Icon="Delete" />
+                </StackPanel>
+            </Flyout>
+        </Grid.ContextFlyout>
+        <!--<Grid.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Copy" >
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE8C8;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Cut" >
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE8C6;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Paste" >
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xE77F;" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator />
+                <MenuFlyoutItem Text="Rename" >
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Select" >
+                </MenuFlyoutItem>
+                <MenuFlyoutSeparator />
+                <MenuFlyoutItem Text="Delete" Icon="Delete" />
+            </MenuFlyout>
+        </Grid.ContextFlyout>-->
+    </Grid>
+</UserControl>
