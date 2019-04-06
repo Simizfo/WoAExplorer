@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,7 +40,20 @@ namespace WoAExplorer
             thisPage = this;
             DataContext = this;
             updateDrivesList();
-            loadFolderContent(SystemDataPaths.GetDefault().Windows);
+            try
+            {
+                loadFolderContent(availableDrives[0]);
+            } catch
+            {
+                try
+                {
+                    loadFolderContent("C:\\");
+                } catch
+                {
+                    Debug.WriteLine("Can't load any folder.");
+                }
+            }
+            
         }
 
         public async void loadFolderContent(StorageFolder sf)
@@ -113,6 +127,22 @@ namespace WoAExplorer
                 return;
             }
             loadFolderContent(await currentFolder.GetParentAsync());
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width >= 800)
+            {
+                driveDropdownButton.Visibility = Visibility.Collapsed;
+                shortcutsScrollViewer.Visibility = Visibility.Visible;
+                contentPane.Margin = new Thickness(300, 60, 0, 0);
+            }
+            else if (e.NewSize.Width < 800)
+            {
+                driveDropdownButton.Visibility = Visibility.Visible;
+                shortcutsScrollViewer.Visibility = Visibility.Collapsed;
+                contentPane.Margin = new Thickness(0, 60, 0, 0);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,17 +29,26 @@ namespace WoAExplorer.CustomControls
 
         public IStorageItem Item
         {
-            get { return (IStorageItem)GetValue(ItemProperty); }
-            set {
+            get
+            {
+                return (IStorageItem)GetValue(ItemProperty);
+            }
+            set
+            {
+                Debug.WriteLine(value);
                 SetValue(ItemProperty, value);
             }
         }
 
         public static readonly DependencyProperty ItemProperty = DependencyProperty.Register("Item", typeof(IStorageItem), typeof(StorageItemControl), new PropertyMetadata(default(int), new PropertyChangedCallback(async (s, e) =>
             {
-                if (e.OldValue is IStorageItem oldValue) { }
+                if (e.OldValue is IStorageItem oldValue)
+                {
+                    Debug.WriteLine("OLDVALUE " + oldValue.ToString());
+                }
                 if (e.NewValue is IStorageItem newValue)
                 {
+                    Debug.WriteLine("NEWVALUE: " + e.NewValue.ToString() + "-" + newValue.ToString());
                     ((StorageItemControl)(s)).ItemNameLabel.Text = newValue.Name;
                     ((StorageItemControl)(s)).ItemFlyoutName.Text = newValue.Name;
                     if (newValue.IsOfType(StorageItemTypes.File))
@@ -65,8 +75,9 @@ namespace WoAExplorer.CustomControls
 
         private void MainGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (((IStorageItem)GetValue(ItemProperty)).IsOfType(StorageItemTypes.Folder)){
-                MainPage.loadFolderContentFromOutside(((IStorageItem)GetValue(ItemProperty)).Path);
+            IStorageItem item = GetValue(ItemProperty) as IStorageItem;
+            if (item.IsOfType(StorageItemTypes.Folder)){
+                MainPage.loadFolderContentFromOutside(item.Path);
             }
         }
 
@@ -79,7 +90,7 @@ namespace WoAExplorer.CustomControls
                 var dummy = await ApplicationData.Current.TemporaryFolder.CreateFileAsync("dummy." + imgExt, CreationCollisionOption.ReplaceExisting); //may overwrite existing
                 iconTmb = await dummy.GetThumbnailAsync(ThumbnailMode.SingleItem, size);
             }
-            else
+             else
             {
                 iconTmb = await file.GetThumbnailAsync(ThumbnailMode.SingleItem, size);
             }
