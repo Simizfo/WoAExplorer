@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
-using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace WoAExplorer
 {
@@ -74,14 +63,47 @@ namespace WoAExplorer
 
         public static async void loadFolderContentFromOutside(string path)
         {
-            thisPage.loadFolderContent(await StorageFolder.GetFolderFromPathAsync(path));
+            try
+            {
+                thisPage.loadFolderContent(await StorageFolder.GetFolderFromPathAsync(path));
+            } catch (Exception e)
+            {
+                bool result = await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-broadfilesystemaccess"));
+                var messageDialog = new MessageDialog("The app needs the broad filesystem access capability to work. \nThe settings app will be opened, please enable it.");
+                messageDialog.Commands.Add(new UICommand("Try again", new UICommandInvokedHandler(FileSystemPermissionDialog)));
+                messageDialog.Commands.Add(new UICommand("Close", new UICommandInvokedHandler(FileSystemPermissionDialog)));
+                messageDialog.DefaultCommandIndex = 0;
+                messageDialog.CancelCommandIndex = 1;
+                await messageDialog.ShowAsync();
+            }
         }
 
         public async void loadFolderContent(string path)
         {
-            loadFolderContent(await StorageFolder.GetFolderFromPathAsync(path));
+            try {
+                loadFolderContent(await StorageFolder.GetFolderFromPathAsync(path));
+            } catch (Exception e) {
+                bool result = await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-broadfilesystemaccess"));
+                var messageDialog = new MessageDialog("The app needs the broad filesystem access capability to work. \nThe settings app will be opened, please enable it.");
+                messageDialog.Commands.Add(new UICommand("Try again", new UICommandInvokedHandler(FileSystemPermissionDialog)));
+                messageDialog.Commands.Add(new UICommand("Close", new UICommandInvokedHandler(FileSystemPermissionDialog)));
+                messageDialog.DefaultCommandIndex = 0;
+                messageDialog.CancelCommandIndex = 1;
+                await messageDialog.ShowAsync();
+            }   
         }
-        
+
+        private static void FileSystemPermissionDialog(IUICommand command)
+        {
+            if(command.Label == "Try again")
+            {
+                loadFolderContentFromOutside("C:\\");
+            } else if(command.Label == "Close")
+            {
+                CoreApplication.Exit();
+            }
+        }
+
         public async void updateDrivesList()
         {
             availableDrives.Clear();

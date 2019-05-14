@@ -10,14 +10,14 @@
     d:DesignHeight="50"
     d:DesignWidth="400">
 
-    <Grid x:Name="mainGrid" Tapped="MainGrid_Tapped" Height="50" HorizontalAlignment="Stretch">
-        <Image x:Name="ItemIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10, 0, 0, 0" Width="40" Height="40"/>
+    <Grid x:Name="mainGrid" Tapped="MainGrid_Tapped" MinHeight="14" MaxHeight="50" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Image x:Name="ItemIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10, 5, 0, 5"/>
         <TextBlock x:Name="ItemNameLabel" Text="AAA" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60, 0, 0, 0"/>
         <Grid.ContextFlyout>
             <Flyout>
                 <StackPanel Margin="0" Padding="-12" Spacing="0">
                     <controls:DropShadowPanel HorizontalAlignment="Stretch" Height="100" MinWidth="250" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                        <Grid Height="100" MinWidth="250" Background="{ThemeResource SystemChromeMediumColor}">
+                        <Grid Height="100" MinWidth="250" Background="{ThemeResource SystemControlBaseLowAcrylicElementBrush}">
                             <Image x:Name="ItemFlyoutIcon" Margin="15, 15, 0, 15" Height="70" Width="70" VerticalAlignment="Center" HorizontalAlignment="Left"></Image>
                             <TextBlock x:Name="ItemFlyoutName" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100, 20, 0, 0" FontSize="12" Text="[itemname]"></TextBlock>
                             <TextBlock x:Name="ItemFlyoutType" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100, 35, 0, 0" FontSize="12" Text="[itemtype]"></TextBlock>

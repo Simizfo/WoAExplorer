@@ -39,14 +39,13 @@
             <ListView x:Name="shortcutsListPanel" ItemsSource="{x:Bind availableDrives}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <customcontrols:StorageItemControl Item="{Binding}"/>
+                        <customcontrols:StorageItemControl MaxHeight="20" Item="{Binding}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </ScrollViewer>
         <controls:DropShadowPanel x:Name="contentPane" HorizontalAlignment="Stretch" Margin="300, 60, 0, 0" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-            <ScrollViewer x:Name="contentScrollViewer" >
-                <Grid x:Name="contentGrid" Background="{ThemeResource SystemChromeLowColor}" Opacity="1">
+            <Grid x:Name="contentGrid" Background="{ThemeResource SystemChromeLowColor}" Opacity="1">
                     <ListView x:Name="contentListPanel" ItemsSource="{x:Bind currentItems}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -54,8 +53,10 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                    <Grid x:Name="infoPanel" Height="30" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlBaseLowAcrylicElementBrush}">
+                        <TextBlock Text="[itemsCount]"></TextBlock>
+                    </Grid>
                 </Grid>
-            </ScrollViewer>
         </controls:DropShadowPanel>
     </Grid>
 </Page>
